@@ -11,7 +11,7 @@ from colorama import Fore, Style, init
 # Initialize colorama
 init(autoreset=True)
 
-# Banner
+# Banner (unchanged)
 BANNER = r"""
 ▓█████▄ ▓█████  ██▓     ██▓ ███▄ ▄███▓ ▄▄▄       ███▄    █  ▄▄▄█████▓
 ▒██  ▀█▄▓█   ▀ ▓██▒    ▓██▒▓██▒▀█▀ ██▒▒████▄     ██ ▀█   █  ▓  ██▒ ▓▒
@@ -24,11 +24,36 @@ BANNER = r"""
   ░        ░  ░    ░  ░ ░         ░         ░  ░         ░          
 """
 
-# Sample data pools
-NAMES = ["Hiroshi Sato", "Ayumi Takahashi", "Renato Sahani", "Kenji Tanaka", "Yumi Nakamura", "Taro Suzuki"]
-ALT_NAMES = ["H. Sato", "A. Takahashi", "R. Sahani", "K. Tanaka", "Y. Nakamura", "T. Suzuki"]
-CARRIERS = ["NTT Docomo", "SoftBank", "au KDDI", "Rakuten Mobile"]
-CITIES = ["Tokyo", "Osaka", "Nagoya", "Sapporo", "Yokohama", "Fukuoka"]
+# Expanded data pools (Japan + India + Nepal)
+NAMES = [
+    # Japan
+    "Hiroshi Sato", "Ayumi Takahashi", "Kenji Tanaka", "Yumi Nakamura", "Taro Suzuki",
+    # India
+    "Rahul Sharma", "Priya Verma", "Amit Patel", "Sneha Iyer", "Arjun Mehta", "Neha Gupta", "Ravi Kumar", "Pooja Singh",
+    # Nepal
+    "Sanjay Shrestha", "Anita Gurung", "Dipesh Rana", "Kritika Basnet", "Binod Adhikari", "Mina Tamang"
+]
+ALT_NAMES = [
+    "H. Sato", "A. Takahashi", "K. Tanaka", "Y. Nakamura", "T. Suzuki",
+    "R. Sharma", "P. Verma", "A. Patel", "S. Iyer", "A. Mehta", "N. Gupta", "R. Kumar", "P. Singh",
+    "S. Shrestha", "A. Gurung", "D. Rana", "K. Basnet", "B. Adhikari", "M. Tamang"
+]
+CARRIERS = [
+    # Japan
+    "NTT Docomo", "SoftBank", "au KDDI", "Rakuten Mobile",
+    # India
+    "Jio", "Airtel", "Vodafone Idea", "BSNL",
+    # Nepal
+    "Ncell", "Nepal Telecom", "SmartCell"
+]
+CITIES = [
+    # Japan
+    "Tokyo", "Osaka", "Nagoya", "Sapporo", "Yokohama", "Fukuoka",
+    # India
+    "Delhi", "Mumbai", "Bengaluru", "Chennai", "Kolkata", "Hyderabad",
+    # Nepal
+    "Kathmandu", "Pokhara", "Biratnagar", "Lalitpur", "Bhaktapur"
+]
 GENDERS = ["Male", "Female"]
 MODELS = ["iPhone 14 Pro", "iPhone 16 Plus", "Samsung Galaxy S23", "Google Pixel 8", "Xiaomi 13 Pro"]
 OS_LIST = ["iOS 18.5", "iOS 17.6", "Android 14", "Android 13", "HarmonyOS 4.0"]
@@ -67,7 +92,7 @@ def main():
     # Input
     phone = input(Fore.YELLOW + "Enter phone number: " + Style.RESET_ALL).strip()
     if not phone.startswith("+") or not phone[1:].isdigit():
-        print(Fore.RED + "[!] Invalid number. Please use format like +819012345678" + Style.RESET_ALL)
+        print(Fore.RED + "[!] Invalid number. Please use format like +919812345678" + Style.RESET_ALL)
         return
 
     # Simulate searching
@@ -100,10 +125,10 @@ def main():
     print(f"Gender           : {gender}")
     print(f"Carrier          : {carrier}")
     print(f"Line Type        : Mobile")
-    print(f"City / State     : {city}, Japan")
+    print(f"City / State     : {city}")
     print(f"Email            : {email}")
     print(f"Last Seen        : {datetime.now().strftime('%Y-%m-%d %H:%M')}")
-    
+
     # Spam score with color
     if spam_score < 30:
         print(f"Spam Score       : {Fore.GREEN}{spam_score}% (Safe){Style.RESET_ALL}")
@@ -116,7 +141,7 @@ def main():
     print(Fore.CYAN + "\n=== Device Info ===" + Style.RESET_ALL)
     print(f"Phone Model      : {model}")
     print(f"OS Version       : {os_ver}")
-    print(f"Last Active IP   : {ip} (Tokyo, JP)")
+    print(f"Last Active IP   : {ip}")
     print("Network Type     : 4G LTE")
 
     # Social info
