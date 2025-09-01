@@ -5,7 +5,7 @@ Author: Renato
 """
 
 import random, time, hashlib, sys
-from datetime import datetime
+from datetime import datetime, timedelta
 from colorama import Fore, Style, init
 
 # Initialize colorama
@@ -85,6 +85,20 @@ def progress_bar(text="Searching", length=20):
         time.sleep(0.05)
     print()
 
+# Function: generate call logs
+def generate_call_logs(seed):
+    random.seed(seed)
+    logs = []
+    num_logs = random.randint(3, 6)
+    for _ in range(num_logs):
+        contact = seeded_choice(seed + random.randint(1,50), NAMES)
+        duration = random.randint(1, 20)
+        days_ago = random.randint(1, 180)
+        timestamp = datetime.now() - timedelta(days=days_ago, hours=random.randint(0,23), minutes=random.randint(0,59))
+        log_type = random.choice(["📞 Received", "📤 Outgoing", "❌ Missed"])
+        logs.append(f"{log_type} - {contact} - {duration} min - {timestamp.strftime('%d/%m/%Y %H:%M')}")
+    return logs
+
 # Main
 def main():
     print(Fore.CYAN + BANNER + Style.RESET_ALL)
@@ -114,8 +128,8 @@ def main():
     model = seeded_choice(seed+5, MODELS)
     os_ver = seeded_choice(seed+6, OS_LIST)
     ip = fake_ip(seed+7)
-    email = name.lower().replace(" ", ".") + "@example.com"
-    spam_score = (seed % 100)
+    email = name.lower().replace(" ", ".") + "@gmail.com"
+    spam_score = seed % 100
 
     # Display results
     print(Fore.GREEN + "\n=== Caller Info ===" + Style.RESET_ALL)
@@ -131,9 +145,9 @@ def main():
 
     # Spam score with color
     if spam_score < 30:
-        print(f"Spam Score       : {Fore.GREEN}{spam_score}% (Safe){Style.RESET_ALL}")
+        print(f"Spam Score       : {Fore.GREEN}{spam_score}% (Safe ✅){Style.RESET_ALL}")
     elif spam_score < 70:
-        print(f"Spam Score       : {Fore.YELLOW}{spam_score}% (Medium Risk){Style.RESET_ALL}")
+        print(f"Spam Score       : {Fore.YELLOW}{spam_score}% (Medium Risk ⚠️){Style.RESET_ALL}")
     else:
         print(f"Spam Score       : {Fore.RED}{spam_score}% (High Risk 🚨){Style.RESET_ALL}")
 
@@ -147,7 +161,14 @@ def main():
     # Social info
     print(Fore.MAGENTA + "\n=== Social Info ===" + Style.RESET_ALL)
     for s in SOCIALS:
-        print(f"{s}{name.lower().replace(' ', '')}")
+        handle = f"{name.lower().replace(' ', '')}{random.randint(1,99)}"
+        print(f"{s}{handle}")
+
+    # Recent Call Logs
+    print(Fore.CYAN + "\n=== Recent Call Logs ===" + Style.RESET_ALL)
+    logs = generate_call_logs(seed)
+    for log in logs:
+        print(log)
 
     print(Fore.CYAN + "\n=== End of Result ===" + Style.RESET_ALL)
 
